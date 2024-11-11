@@ -10,14 +10,8 @@ import moment from "moment";
 import { cn } from "@/lib/utils";
 import ChapterImageCard from "@/components/Card/ChapterImageCard";
 import useWindowSize from "@/hooks/useWindowSize";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import "moment/locale/vi";
+import { Button } from "@/components/ui/button";
 
 moment.locale("vi");
 
@@ -183,36 +177,50 @@ export default function DetailComicComponent({
                   </div>
 
                   <div className="mt-4 mb-10 w-full">
-                    <Carousel
-                      style={{ maxHeight: windowSize?.height }}
-                      className=""
-                    >
-                      <CarouselContent className="w-auto">
-                        {oneChapterInfo.item.chapter_image.map(
-                          (data, index_data) => (
-                            <CarouselItem
-                              key={index_data}
-                              className="sm:basis-2/3"
-                            >
-                              <div className="flex justify-center items-center p-1">
-                                <ChapterImageCard
-                                  domain={oneChapterInfo.domain_cdn}
-                                  path={oneChapterInfo.item.chapter_path}
-                                  file={data.image_file}
-                                  style={{
-                                    maxHeight:
-                                      (windowSize && windowSize.height - 100) ??
-                                      500,
-                                  }}
-                                />
-                              </div>
-                            </CarouselItem>
-                          )
-                        )}
-                      </CarouselContent>
-                      <CarouselPrevious className="left-0" />
-                      <CarouselNext className="right-0" />
-                    </Carousel>
+                    {oneChapterInfo.item.chapter_image.map(
+                      (data, index_data) => (
+                        <ChapterImageCard
+                          domain={oneChapterInfo.domain_cdn}
+                          path={oneChapterInfo.item.chapter_path}
+                          file={data.image_file}
+                          style={{
+                            maxHeight:
+                              (windowSize && windowSize.height - 100) ?? 500,
+                          }}
+                          key={index_data}
+                        />
+                      )
+                    )}
+
+                    <div className="flex items-center space-x-4 w-full justify-center mt-4">
+                      <Button
+                        disabled={detail.currentChapterIdx === 0}
+                        onClick={() => {
+                          setDetail((prev) => ({
+                            ...prev,
+                            currentChapterIdx: prev.currentChapterIdx - 1,
+                          }));
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                      >
+                        Chapter Trước
+                      </Button>
+                      <Button
+                        disabled={
+                          detail.currentChapterIdx ===
+                          detail.chapters.length - 1
+                        }
+                        onClick={() => {
+                          setDetail((prev) => ({
+                            ...prev,
+                            currentChapterIdx: prev.currentChapterIdx + 1,
+                          }));
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                      >
+                        Chapter Tiếp Theo
+                      </Button>
+                    </div>
                   </div>
                 </div>
               )}

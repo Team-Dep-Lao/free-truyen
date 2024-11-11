@@ -1,0 +1,35 @@
+name: Remote ssh command (for master branch)
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build FreeTruyen production development
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEV_SSH_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          key: ${{ secrets.DEV_SSH_KEY }}
+          port: ${{ secrets.DEV_PORT }}
+
+          script: |
+            whoami
+            cd ~/project/truyentranh.kiendev.click/
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/ssh_key
+            git checkout .
+            git clean -df
+            git pull origin master
+            git status
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            yarn
+            rm -rf .env
+            echo "NEXT_PUBLIC_MAIN_URL=https://otruyenapi.com/v1/api" >> .env
+            echo "NEXT_PUBLIC_IMG_URL=https://otruyenapi.com" >> .env
+            yarn build
+            pm2 reload TruyenTranh
