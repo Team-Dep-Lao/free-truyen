@@ -22,13 +22,16 @@ export default function Header() {
               <SearchBar />
             </div>
             <div className="flex items-center space-x-2">
-              <TimeLeft/>
-              <Link href={`mailto:kienbq@lotusa.net?subject=Phản hồi về web đọc truyện free - Free Truyện`}>
+              {/* <TimeLeft/> */}
+              <Link
+                href={`mailto:kienbq@lotusa.net?subject=Phản hồi về web đọc truyện free - Free Truyện`}
+              >
                 <Button className="bg-orange-500 hover:bg-orange-400 text-white font-bold sm:flex hidden">
                   Phản Hồi
                 </Button>
               </Link>
-              <RedeemButton />
+
+              {/* <RedeemButton /> */}
               <div className="">
                 <MobileMenu />
               </div>
@@ -42,7 +45,7 @@ export default function Header() {
         </div>
       </div>
       <div className="sm:hidden flex h-14"></div>
-      <CheckFreeHourUseWeb />
+      {/* <CheckFreeHourUseWeb /> */}
     </React.Fragment>
   );
 }

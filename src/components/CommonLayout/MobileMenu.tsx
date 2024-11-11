@@ -72,12 +72,12 @@ export default function MobileMenu() {
         setShowList(!showList);
       },
     },
-    {
-      label: "Đổi code",
-      href: "",
-      icon: <ScanBarcode />,
-      action: () => setVisible(true),
-    },
+    // {
+    //   label: "Đổi code",
+    //   href: "",
+    //   icon: <ScanBarcode />,
+    //   action: () => setVisible(true),
+    // },
     {
       label: "Phản hồi",
       href: "/",
