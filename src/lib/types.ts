@@ -78,16 +78,18 @@ export interface Chapter {
 export interface ChapterDetail {
   domain_cdn: string;
   item: {
-    chapter_image: {
-      image_page: number;
-      image_file: string;
-    }[];
+    chapter_image: ChapterImage[];
     chapter_name: string;
     chapter_path: string;
     chapter_title: string;
     comic_name: string;
     _id: string;
   };
+}
+
+export interface ChapterImage {
+  image_page: number;
+  image_file: string;
 }
 
 export interface SeoPage {

@@ -45,7 +45,7 @@ export default async function Home({
               />
             </React.Suspense>
           </div>
-          <div className="sm:col-span-5">
+          <div className="sm:col-span-5 sm:px-0 px-4">
             <SectionList title="Sắp ra mắt" pageData={comingSoonComics.data} />
           </div>
         </div>

@@ -8,7 +8,6 @@ import Link from "next/link";
 
 export default function ScrollButton() {
   const [visible, setVisible] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -21,7 +20,6 @@ export default function ScrollButton() {
     function toggleVisibility() {
       if (window.scrollY > 300) {
         setVisible(true);
-        setOpen(true);
       } else {
         setVisible(false);
       }
@@ -39,7 +37,7 @@ export default function ScrollButton() {
         "flex flex-col space-y-4 fixed bottom-6 right-6 p-0.5 shadow-sm",
       ])}
     >
-      <Link href={"tel:+84877296195"}>
+      <Link href={"tel:+84877296195"} className="sm:hidden flex">
         <Button className="bg-green-500 hover:bg-green-400" size={"icon"}>
           <Phone className="text-white font-bold" />
         </Button>
@@ -48,6 +46,7 @@ export default function ScrollButton() {
         href={`sms:+84877296195?${createQuery({
           body: "Hỏi điều cần hỏi...?",
         })}`}
+        className="sm:hidden flex"
       >
         <Button className="bg-blue-500 hover:bg-blue-400" size={"icon"}>
           <MessageCircleMore className="text-white font-bold" />

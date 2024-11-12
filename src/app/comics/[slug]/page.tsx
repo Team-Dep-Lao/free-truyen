@@ -1,5 +1,5 @@
 import api from "@/apis";
-import DetailComicComponent from "./Detail";
+import DetailComicComponent from "./(components)/Detail";
 import { Metadata, ResolvingMetadata } from "next";
 import { SeoPage } from "@/lib/types";
 
@@ -45,13 +45,48 @@ export async function generateMetadata(
 
 export default async function ComicDetail({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ _stt?: number; _sv?: number }>;
 }) {
   const slug = (await params).slug;
+  const searchParamsQuery = await searchParams;
+  const queryStt = searchParamsQuery._stt
+    ? isNaN(searchParamsQuery._stt)
+      ? 0
+      : +searchParamsQuery._stt < 0
+      ? 0
+      : +searchParamsQuery._stt
+    : 0;
+  const querySv = searchParamsQuery._sv
+    ? isNaN(searchParamsQuery._sv)
+      ? 0
+      : +searchParamsQuery._sv < 0
+      ? 0
+      : +searchParamsQuery._sv
+    : 0;
+
   const res = await api.get(
     `${process.env.NEXT_PUBLIC_MAIN_URL}/truyen-tranh/${slug}`
   );
 
-  return <DetailComicComponent pageData={res.data} />;
+  const listServer = res.data.item.chapters;
+  const chooseServer = listServer.length > 0 && listServer[querySv];
+  const chooseChapter =
+    chooseServer &&
+    chooseServer.server_data.length > 0 &&
+    chooseServer.server_data[queryStt];
+  const chapterInfo =
+    chooseChapter && (await api.get(`${chooseChapter.chapter_api_data}`));
+
+  return (
+    <DetailComicComponent
+      pageData={res.data}
+      listServer={listServer}
+      chooseChapter={queryStt}
+      chooseServer={querySv}
+      chapterInfo={chapterInfo.data}
+    />
+  );
 }
