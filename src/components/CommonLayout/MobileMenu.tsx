@@ -1,24 +1,11 @@
 "use client";
 
 import * as React from "react";
-
-import {
-  ChevronDown,
-  Home,
-  Layers3,
-  Menu,
-  MessageCircleMore,
-  Minus,
-  Plus,
-  ScanBarcode,
-  Search,
-} from "lucide-react";
+import { Home, Layers3, Menu, MessageCircleMore, Search } from "lucide-react";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -32,24 +19,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Categories } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import useNotification from "@/hooks/useNotification";
 import { addDays } from "date-fns";
-import api from "@/apis";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { useAppContext } from "@/context/dataCommonContext";
 
 export default function MobileMenu() {
-  const [showList, setShowList] = React.useState(false);
   const router = useRouter();
   const [visible, setVisible] = React.useState(false);
   const { notification } = useNotification();
   const [open, setOpen] = React.useState(false);
-  const { categories } = useAppContext();
 
   const MENU = [
     {
@@ -66,18 +45,10 @@ export default function MobileMenu() {
     },
     {
       label: "Thể loại",
-      href: "",
+      href: "/categories",
       icon: <Layers3 />,
-      action: () => {
-        setShowList(!showList);
-      },
+      action: () => {},
     },
-    // {
-    //   label: "Đổi code",
-    //   href: "",
-    //   icon: <ScanBarcode />,
-    //   action: () => setVisible(true),
-    // },
     {
       label: "Phản hồi",
       href: "/",
@@ -141,37 +112,8 @@ export default function MobileMenu() {
                         {menu.label}
                       </div>
                     </div>
-                    <ChevronDown
-                      className={cn([
-                        categories.length > 0 && menu.label === "Thể loại"
-                          ? "flex"
-                          : "hidden",
-                      ])}
-                    />
                   </div>
                 </Button>
-                <div
-                  className={cn([
-                    "grid grid-cols-2 p-4 gap-1 overflow-y-auto max-h-[300px]",
-                    menu.label === "Thể loại" && showList
-                      ? "visible"
-                      : "hidden",
-                  ])}
-                >
-                  {categories.map((cate) => (
-                    <Link
-                      key={cate._id}
-                      href={`/categories/${cate.slug}`}
-                      onClick={() => {
-                        setOpen(false);
-                        setShowList(false);
-                      }}
-                      className="border px-1 rounded-sm"
-                    >
-                      {cate.name}
-                    </Link>
-                  ))}
-                </div>
               </React.Fragment>
             ))}
           </div>

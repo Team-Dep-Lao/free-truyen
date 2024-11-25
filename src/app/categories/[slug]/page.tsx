@@ -19,5 +19,11 @@ export default async function CategoryIndex({
     }
   );
 
-  return <DetailCategory pageData={res.data} />;
+  const categories = await api.get(
+    `${process.env.NEXT_PUBLIC_MAIN_URL}/the-loai`
+  );
+
+  return (
+    <DetailCategory pageData={res.data} categories={categories.data.items} />
+  );
 }

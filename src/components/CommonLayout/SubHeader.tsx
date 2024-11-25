@@ -29,23 +29,16 @@ export default function SubHeader() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="font-bold uppercase">
-            Thể loại
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-4 lg:w-[600px] max-h-[400px] overflow-y-auto">
-              {categories.map((category) => (
-                <Link href={`/categories/${category.slug}`} key={category._id}>
-                  <Button
-                    className="w-full font-bold text-black px-2"
-                    variant={"ghost"}
-                  >
-                    {category.name}
-                  </Button>
-                </Link>
-              ))}
-            </ul>
-          </NavigationMenuContent>
+          <Link href="/categories" legacyBehavior passHref>
+            <NavigationMenuLink
+              className={cn([
+                navigationMenuTriggerStyle(),
+                "font-bold uppercase",
+              ])}
+            >
+              Thể loại
+            </NavigationMenuLink>
+          </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/search" legacyBehavior passHref>
