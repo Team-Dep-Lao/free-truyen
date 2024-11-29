@@ -9,6 +9,8 @@ import { Item } from "@/lib/types";
 import moment from "moment";
 import { cn } from "@/lib/utils";
 import "moment/locale/vi";
+import { Button } from "../ui/button";
+import { Bookmark } from "lucide-react";
 
 moment.locale("vi");
 
@@ -25,8 +27,11 @@ export default function GridCard({ data, className, style }: GridCardProps) {
     <div>
       <div ref={ref}></div>
       {inView && (
-        <Card className={cn([className])} style={style ?? {}}>
-          <CardHeader className="p-0">
+        <Card
+          className={cn(["overflow-hidden group/gridCard", className])}
+          style={style ?? {}}
+        >
+          <CardHeader className="p-0 relative">
             <Link href={`/comics/${data.slug}`}>
               <Image
                 alt=""
@@ -37,6 +42,13 @@ export default function GridCard({ data, className, style }: GridCardProps) {
                 className="aspect-square object-cover w-full rounded-md"
               />
             </Link>
+            <Button
+              size={"icon"}
+              variant={"outline"}
+              className="sm:absolute static sm:ml-0 ml-2 top-0 -right-10 transition-all duration-500 sm:group-hover/gridCard:-translate-x-12"
+            >
+              <Bookmark className={cn([])} />
+            </Button>
           </CardHeader>
           <CardContent className="p-2">
             <Link

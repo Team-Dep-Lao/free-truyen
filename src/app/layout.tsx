@@ -5,7 +5,7 @@ import Header from "@/components/CommonLayout/Header";
 import Footer from "@/components/CommonLayout/Footer";
 import ScrollButton from "@/components/CommonLayout/ScrollButton";
 import { Toaster } from "@/components/ui/toaster";
-import { DataCommonContextProvider } from "@/context/dataCommonContext";
+// import { DataCommonContextProvider } from "@/context/dataCommonContext";
 import React from "react";
 
 const geistSans = localFont({
@@ -30,18 +30,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="mdl-js">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-200`}
       >
         <React.Suspense fallback={<></>}>
-          <DataCommonContextProvider>
+          {/* <DataCommonContextProvider> */}
             <Toaster />
             <Header />
             {children}
             <Footer />
             <ScrollButton />
-          </DataCommonContextProvider>
+          {/* </DataCommonContextProvider> */}
         </React.Suspense>
       </body>
     </html>

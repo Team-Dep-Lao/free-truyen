@@ -13,6 +13,9 @@ import moment from "moment";
 import "moment/locale/vi";
 import ServerDisplay from "./ServerDisplay";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Bookmark } from "lucide-react";
+import { bookmark, checkBookmark, cn } from "@/lib/utils";
 
 moment.locale("vi");
 
@@ -25,12 +28,14 @@ export interface DetailComicComponentProps {
 }
 
 export default function DetailComicComponent(props: DetailComicComponentProps) {
+
+
   return (
     <div className="min-h-screen pt-2 pb-6">
       <PageProvider>
         {props.pageData && (
           <React.Fragment>
-            <div className="flex sm:flex-row flex-col sm:space-x-4 space-x-0 space-y-4 sm:space-y-0">
+            <div className="flex sm:flex-row flex-col sm:space-x-4 space-x-0 space-y-4 sm:space-y-0 overflow-hidden">
               <Image
                 src={`${process.env.NEXT_PUBLIC_IMG_URL}/uploads/comics/${props.pageData.item.thumb_url}`}
                 className="sm:w-[400px] w-full aspect-square object-contain"
@@ -39,6 +44,7 @@ export default function DetailComicComponent(props: DetailComicComponentProps) {
                 height={0}
                 sizes="100vw"
               />
+
               <div className="p-2 flex-1">
                 <div className="font-bold text-xl">
                   {props.pageData.item.name}
@@ -65,6 +71,13 @@ export default function DetailComicComponent(props: DetailComicComponentProps) {
                     __html: props.pageData.item.content,
                   }}
                 ></div>
+                <Button
+                  size={"icon"}
+                  variant={"outline"}
+                  className="mt-10"
+                >
+                  <Bookmark className={cn([])} />
+                </Button>
               </div>
             </div>
             {props.listServer.length > 0 ? (

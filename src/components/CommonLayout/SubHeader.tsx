@@ -1,82 +1,59 @@
 "use client";
 
-import { Home } from "lucide-react";
-import { Button } from "../ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+import { Bookmark, Home, Logs, Search } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useAppContext } from "@/context/dataCommonContext";
+import { usePathname } from "next/navigation";
+
+const items = [
+  {
+    label: "Trang chủ",
+    to: "/",
+    icon: Home,
+  },
+  {
+    label: "Thể loại",
+    to: "/categories",
+    icon: Logs,
+  },
+  {
+    label: "Tìm kiếm",
+    to: "/search",
+    icon: Search,
+  },
+  {
+    label: "Truyện đã lưu",
+    to: "/my-list",
+    icon: Bookmark,
+  },
+];
 
 export default function SubHeader() {
-  const { categories } = useAppContext();
+  const pathname = usePathname();
 
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              <Home />
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/categories" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn([
-                navigationMenuTriggerStyle(),
-                "font-bold uppercase",
-              ])}
-            >
-              Thể loại
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/search" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn([
-                navigationMenuTriggerStyle(),
-                "font-bold uppercase",
-              ])}
-            >
-              Tìm kiếm
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/my-list" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn([
-                navigationMenuTriggerStyle(),
-                "font-bold uppercase",
-              ])}
-            >
-              Truyện đã xem
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/my-favorite" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={cn([
-                navigationMenuTriggerStyle(),
-                "font-bold uppercase",
-              ])}
-            >
-              Truyện đã lưu
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+    <div className="flex flex-row items-center h-10 justify-center">
+      {items.map((item, idx) => {
+        const isActive =
+          pathname === item.to || // Đúng chính xác pathname
+          (pathname.startsWith(item.to) && pathname !== "/" && item.to !== "/");
+        return (
+          <div
+            key={idx}
+            className={cn([
+              "mx-2 text-gray-400 font-normal hover:text-blue-500",
+              isActive ? "text-blue-600 font-bold" : "",
+            ])}
+          >
+            <Link href={item.to} className={cn(["p-1 "])}>
+              <div className={cn(["flex flex-row items-center space-x-1"])}>
+                <item.icon size={18} />
+                <div>{item.label}</div>
+              </div>
+            </Link>
+          </div>
+        );
+      })}
+    </div>
   );
 }

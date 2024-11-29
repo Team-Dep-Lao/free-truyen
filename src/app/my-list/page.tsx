@@ -1,7 +1,11 @@
-import UnderDeveloperPage from "@/components/CommonLayout/UnderDeveloperPage";
+import PageProvider from "@/components/CommonLayout/Page";
 
-export default function MyList () {
+export default function MyList() {
   return (
-    <UnderDeveloperPage/>
-  )
+    <section className="pt-2 pb-10">
+      <PageProvider>
+        <div></div>
+      </PageProvider>
+    </section>
+  );
 }

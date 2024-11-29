@@ -36,7 +36,7 @@ export default function SectionCarousel({
     <div className="flex flex-col space-y-4 sm:pb-0 pb-10">
       <div
         className={cn([
-          "text-xl font-bold underline text-blue-500",
+          "text-xl font-bold text-blue-500 uppercase",
           title ? "flex" : "hidden",
         ])}
       >

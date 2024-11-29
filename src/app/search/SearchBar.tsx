@@ -21,10 +21,7 @@ export default function SearchBar({
 
   React.useEffect(() => {
     setKeyword(paramsKeyword)
-  }, [paramsKeyword])
-
-  console.log(paramsKeyword);
-  
+  }, [paramsKeyword])  
 
   return (
     <form

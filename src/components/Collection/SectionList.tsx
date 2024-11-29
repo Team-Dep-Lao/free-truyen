@@ -14,7 +14,7 @@ export default function SectionList({ title, pageData }: SectionListProps) {
     <div className="">
       <div
         className={cn([
-          "text-xl text-blue-500 font-bold underline",
+          "text-xl text-blue-500 font-bold uppercase",
           title ? "flex" : "hidden",
         ])}
       >

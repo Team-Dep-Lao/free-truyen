@@ -3,8 +3,8 @@ import SectionCarousel from "@/components/Collection/SectionCarousel";
 import SectionGrid from "@/components/Collection/SectionGrid";
 import SectionList from "@/components/Collection/SectionList";
 import PageProvider from "@/components/CommonLayout/Page";
-import Loading from "@/components/Skeleton/GridCardSkeletonComp";
-import React from "react";
+import Loading from "@/components/loading";
+import React, { Suspense } from "react";
 
 export default async function Home({
   searchParams,
@@ -24,11 +24,6 @@ export default async function Home({
     { page: 1 }
   );
 
-  const releaseNowComics = await api.get(
-    `${process.env.NEXT_PUBLIC_MAIN_URL}/danh-sach/dang-phat-hanh`,
-    { page }
-  );
-
   return (
     <section className="pb-10 pt-2">
       <PageProvider>
@@ -36,14 +31,9 @@ export default async function Home({
           pageData={newComics.data}
           title="Free Truyện - Danh sách truyện mới"
         />
-        <div className="sm:grid flex flex-col sm:space-y-0 space-y-4 sm:grid-cols-12 mt-10 sm:gap-4">
+        <div className="sm:grid flex flex-col sm:space-y-0 space-y-4 sm:grid-cols-12 mt-20 sm:gap-4">
           <div className="sm:col-span-7 col-span-1">
-            <React.Suspense fallback={<Loading />}>
-              <SectionGrid
-                title="Kho truyện miễn phí trọn đời"
-                pageData={releaseNowComics.data}
-              />
-            </React.Suspense>
+            <SectionGrid page={page} />
           </div>
           <div className="sm:col-span-5 sm:px-0 px-4">
             <SectionList title="Sắp ra mắt" pageData={comingSoonComics.data} />

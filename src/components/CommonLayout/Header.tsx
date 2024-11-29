@@ -4,10 +4,7 @@ import { Button } from "../ui/button";
 import SearchBar from "../SearchBar";
 import { cn } from "@/lib/utils";
 import SubHeader from "./SubHeader";
-import RedeemButton from "./RedeemButton";
-import CheckFreeHourUseWeb from "./CheckFreeHourUseWeb";
 import MobileMenu from "./MobileMenu";
-import TimeLeft from "./TimeLeft";
 
 export default function Header() {
   return (
@@ -39,7 +36,7 @@ export default function Header() {
           </div>
         </div>
       </header>
-      <div className="bg-slate-400 border-b py-2 sticky top-0 sm:flex hidden z-50">
+      <div className="bg-slate-50 border-b py-1 sticky top-0 sm:flex hidden z-50">
         <div className="web-container min-[1200px]:px-0 px-4 flex relative">
           <SubHeader />
         </div>

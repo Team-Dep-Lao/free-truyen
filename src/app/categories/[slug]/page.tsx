@@ -1,4 +1,3 @@
-import api from "@/apis";
 import DetailCategory from "./DetailCategory";
 
 export default async function CategoryIndex({
@@ -12,18 +11,9 @@ export default async function CategoryIndex({
   const queryPage = (await searchParams).page;
   const page = queryPage ? (isNaN(queryPage) ? 1 : +queryPage) : 1;
 
-  const res = await api.get(
-    `${process.env.NEXT_PUBLIC_MAIN_URL}/the-loai/${slug}`,
-    {
-      page,
-    }
-  );
-
-  const categories = await api.get(
-    `${process.env.NEXT_PUBLIC_MAIN_URL}/the-loai`
-  );
-
-  return (
-    <DetailCategory pageData={res.data} categories={categories.data.items} />
-  );
+  try {
+    return <DetailCategory slug={slug} page={page} />;
+  } catch (e) {
+    return null;
+  }
 }
