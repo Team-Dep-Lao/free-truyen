@@ -1,33 +1,20 @@
 "use client";
 
-import api from "@/apis";
 import { Skeleton } from "@/components/ui/skeleton";
+import useLoading from "@/hooks/useLoading";
 import { Categories } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function ListCategories() {
+export default function ListCategories({
+  categories,
+}: {
+  categories: Categories[];
+}) {
   const pathname = usePathname();
-  const [categories, setCategories] = useState<Categories[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  async function getCategories() {
-    try {
-      setLoading(true);
-      const res = await api.get(`${process.env.NEXT_PUBLIC_MAIN_URL}/the-loai`);
-
-      setCategories(res.data.items);
-    } catch (e) {
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    getCategories();
-  }, []);
+  const loading = useLoading([categories])
 
   return (
     <div className="flex-wrap flex flex-row px-10 justify-center items-center gap-1">

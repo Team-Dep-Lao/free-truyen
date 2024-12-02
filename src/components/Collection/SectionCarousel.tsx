@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
@@ -16,6 +17,7 @@ import Link from "next/link";
 import { Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import "moment/locale/vi";
+import { Skeleton } from "../ui/skeleton";
 
 moment.locale("vi");
 

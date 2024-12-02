@@ -2,6 +2,8 @@ import api from "@/apis";
 import DetailComicComponent from "./(components)/Detail";
 import { Metadata, ResolvingMetadata } from "next";
 import { SeoPage } from "@/lib/types";
+import { Suspense } from "react";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },

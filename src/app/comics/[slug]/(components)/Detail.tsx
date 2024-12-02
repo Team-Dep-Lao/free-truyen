@@ -1,12 +1,7 @@
-import api from "@/apis";
+"use client";
+
 import PageProvider from "@/components/CommonLayout/Page";
-import {
-  Chapter,
-  ChapterData,
-  ChapterDetail,
-  ChapterImage,
-  PageData,
-} from "@/lib/types";
+import { ChapterData, ChapterDetail, PageData } from "@/lib/types";
 import Image from "next/image";
 import React from "react";
 import moment from "moment";
@@ -15,7 +10,9 @@ import ServerDisplay from "./ServerDisplay";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Bookmark } from "lucide-react";
-import { bookmark, checkBookmark, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import LoadingScreen from "@/components/LoadingScreen";
+import useLoading from "@/hooks/useLoading";
 
 moment.locale("vi");
 
@@ -28,9 +25,11 @@ export interface DetailComicComponentProps {
 }
 
 export default function DetailComicComponent(props: DetailComicComponentProps) {
+  const loading = useLoading([props.pageData]);
 
-
-  return (
+  return loading ? (
+    <LoadingScreen />
+  ) : (
     <div className="min-h-screen pt-2 pb-6">
       <PageProvider>
         {props.pageData && (
@@ -71,11 +70,7 @@ export default function DetailComicComponent(props: DetailComicComponentProps) {
                     __html: props.pageData.item.content,
                   }}
                 ></div>
-                <Button
-                  size={"icon"}
-                  variant={"outline"}
-                  className="mt-10"
-                >
+                <Button size={"icon"} variant={"outline"} className="mt-10">
                   <Bookmark className={cn([])} />
                 </Button>
               </div>

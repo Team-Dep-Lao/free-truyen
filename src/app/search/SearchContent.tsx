@@ -1,62 +1,47 @@
 "use client";
 
-import api from "@/apis";
 import GridCard from "@/components/Card/GridCard";
 import PaginationButton from "@/components/Collection/PaginationButton";
 import GridCardSkeleton from "@/components/Skeleton/GridCardSkeleton";
+import useLoading from "@/hooks/useLoading";
 import { PageData } from "@/lib/types";
 import * as React from "react";
 
 export interface SearchContentProps {
-  page: number;
-  keyword?: string;
+  pageData: PageData | null;
+  keyword: string;
 }
 
 export default function SearchContent(props: SearchContentProps) {
-  const [loading, setLoading] = React.useState(true);
-  const [pageData, setPageData] = React.useState<PageData | null>(null);
-
-  async function onGet() {
-    setLoading(true);
-    try {
-      const res = await api.get(
-        `${process.env.NEXT_PUBLIC_MAIN_URL}/tim-kiem?keyword=${props.keyword}&page=${props.page}`
-      );
-
-      setPageData(res.data);
-    } catch (e) {
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  React.useEffect(() => {
-    onGet();
-  }, [props.page]);
+  const loading = useLoading([props.pageData]);
 
   return (
-    <div className="pt-4 px-2">
-      <div className="font-bold text-lg">Kết quả</div>
-      <div className="grid sm:grid-cols-5 grid-cols-2 gap-2 relative mt-4">
+    props.keyword !== "" && (
+      <div className="pt-4 px-2">
+        <div className="font-bold text-lg">Kết quả</div>
+        <div className="">Thông tin các truyện có từ khóa{" "}<strong>{props.keyword}</strong></div>
         {!loading ? (
-          pageData && pageData.items.length > 0 ? (
-            pageData.items.map((item, idx) => (
-              <div className="col-span-1" key={idx}>
-                <GridCard data={item} />
-              </div>
-            ))
+          props.pageData && props.pageData.items.length > 0 ? (
+            <div className="grid md:grid-cols-5 sm:grid-cols-3 grid-cols-1 gap-2 relative mt-4">
+              {props.pageData.items.map((item, idx) => (
+                <GridCard data={item} key={idx} className="h-full" />
+              ))}
+            </div>
           ) : (
             <div className="italic">{`Không tìm thấy mẩu truyện nào có từ khóa "${props.keyword}"`}</div>
           )
         ) : (
-          <>
-            {Array.from({ length: 20 }).map((_, idx) => (
+          <div className="grid md:grid-cols-5 sm:grid-cols-3 grid-cols-1 gap-2 relative mt-4">
+            {Array.from({ length: 15 }).map((_, idx) => (
               <GridCardSkeleton key={idx} />
             ))}
-          </>
+          </div>
+        )}
+
+        {props.pageData && props.pageData.items.length > 0 && (
+          <PaginationButton pageData={props.pageData} />
         )}
       </div>
-      {pageData && <PaginationButton pageData={pageData} />}
-    </div>
+    )
   );
 }

@@ -20,7 +20,11 @@ export interface GridCardProps {
   style?: React.CSSProperties;
 }
 
-export default function GridCard({ data, className, style }: GridCardProps) {
+export default function GridCard({
+  data,
+  className,
+  style,
+}: GridCardProps) {
   const { ref, inView } = useInView({ triggerOnce: true });
 
   return (
@@ -42,13 +46,17 @@ export default function GridCard({ data, className, style }: GridCardProps) {
                 className="aspect-square object-cover w-full rounded-md"
               />
             </Link>
-            <Button
+            {/* <Button
               size={"icon"}
               variant={"outline"}
               className="sm:absolute static sm:ml-0 ml-2 top-0 -right-10 transition-all duration-500 sm:group-hover/gridCard:-translate-x-12"
             >
-              <Bookmark className={cn([])} />
-            </Button>
+              <Bookmark
+                className={cn([
+                  isBookmarked(data._id) ? "fill-black" : "fill-white",
+                ])}
+              />
+            </Button> */}
           </CardHeader>
           <CardContent className="p-2">
             <Link

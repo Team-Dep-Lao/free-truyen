@@ -1,7 +1,6 @@
 "use client";
 
 import ChapterImageCard from "@/components/Card/ChapterImageCard";
-import useWindowSize from "@/hooks/useWindowSize";
 import { ChapterDetail } from "@/lib/types";
 import React from "react";
 
@@ -14,8 +13,6 @@ export default function ChapterContentDisplay({
   domain: string;
   path: string;
 }) {
-  // const windowSize = useWindowSize();
-
   return (
     <React.Suspense fallback={<>Loading...</>}>
       {data.item.chapter_image.map((data, index_data) => (

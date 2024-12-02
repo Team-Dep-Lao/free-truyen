@@ -38,6 +38,7 @@ export default function SearchBar({
         size={"icon"}
         type="submit"
         className="ml-4 bg-blue-500 p-2 rounded-xl shadow-md"
+        disabled={keyword.trim() === ''}
       >
         <Search size={24} type="submit" className="text-white" />
       </Button>

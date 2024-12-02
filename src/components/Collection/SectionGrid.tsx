@@ -2,40 +2,19 @@
 
 import { cn } from "@/lib/utils";
 import * as React from "react";
-import api from "@/apis";
 import { PageData } from "@/lib/types";
 import GridCard from "../Card/GridCard";
 import PaginationButton from "./PaginationButton";
 import GridCardSkeleton from "../Skeleton/GridCardSkeleton";
+import useLoading from "@/hooks/useLoading";
 
 export interface SectionLGridProps {
   page: number;
+  pageData: PageData | null;
 }
 
-export default function SectionGrid({ page }: SectionLGridProps) {
-  const [loading, setLoading] = React.useState(true);
-  const [pageData, setPageData] = React.useState<PageData | null>(null);
-
-  async function getPageData() {
-    setLoading(true);
-    await api
-      .get(`${process.env.NEXT_PUBLIC_MAIN_URL}/danh-sach/dang-phat-hanh`, {
-        page,
-      })
-      .then((res) => {
-        setPageData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
-
-  React.useEffect(() => {
-    getPageData();
-  }, [page]);
+export default function SectionGrid({ page, pageData }: SectionLGridProps) {
+  const loading = useLoading([page, pageData]);
 
   return (
     <div className="w-full">
