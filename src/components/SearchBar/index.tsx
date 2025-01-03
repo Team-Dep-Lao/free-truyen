@@ -12,7 +12,6 @@ export default function SearchBar() {
   const [keyword, setKeyword] = useState("");
   const _q = useSearchParams().get("_q");
   const router = useRouter();
-  // const pathname
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();

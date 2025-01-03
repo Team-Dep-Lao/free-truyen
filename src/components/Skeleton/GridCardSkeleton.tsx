@@ -3,7 +3,7 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function GridCardSkeleton() {
   return (
-    <Card className="w-full">
+    <Card className="w-full h-10">
       <CardHeader className="p-0">
         <Skeleton className="aspect-square object-cover w-full rounded-md" />
       </CardHeader>
